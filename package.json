@@ -18,5 +18,7 @@
   "devDependencies": {
     "@babel/core": "~7.9.0"
   },
+  "android": {
+  "package": "com.testuser.Dictonayr"},
   "private": true
 }

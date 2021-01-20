@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Homescreen from './screens/homescreen'
 import {createSwitchNavigator, createAppContainer} from 'react-navigation';
+import Homescreen from './screens/homescreen'
 
 export default function App() {
   return (

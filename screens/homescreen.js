@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableOpacity} from 'react-native';
 import {Header} from 'react-native-elements';
-import { color } from 'react-native-reanimated';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import dictionary from '../dictionary';
 
 
 export default class Homescreen extends React.Component{
@@ -18,46 +18,27 @@ export default class Homescreen extends React.Component{
     }
   }
 
-  getWord = (word) => {
-    var searchWord = word.toLowerCase();
-    var url = 'https://rupinwhitehatjr.github.io/dictionary/' + searchWord + '.json'
-    //console.log(url)
-    return fetch(url).then((data)=>{
-      console.log(data.status)
-      if(data.status===200)
-      {
-        return data.json().then((a)=>{
-          var response = a;
-          if(response && data.status === 200)
-          {
-            var wordData = response.definitions[0]
-            //console.log(wordData);
-            var definition = wordData.description
-            var lexCat = wordData.wordtype
-            this.setState({
-              word : this.state.text,
-              definition : definition,
-              lexCat : lexCat
-            })
-            //console.log(this.state)
-          }
-          else
-          {
-            this.setState({
-              word : this.state.text,
-              definition : "This word cannot be located\nCheck the spelling and try again"
-            })
-          }
-        })
-      }
-      else
-      {
-        this.setState({
-          word : this.state.text,
-          definition : "This word cannot be located\nCheck the spelling and try again"
-        })
-      }
-    })
+  getWord = (text) => {
+    var searchWord = text.toLowerCase();
+    if(dictionary[searchWord])
+    {
+      var word = dictionary[searchWord]['word']
+      var lexCat = dictionary[searchWord]['lexicalCategory']
+      var definitions = dictionary[searchWord]['definition']
+      this.setState({
+        word : word,
+        lexCat : lexCat,
+        definition : definitions
+      });
+    }
+    else
+    {
+      this.setState({
+        word : searchWord,
+        lexCat : '',
+        definition : 'The word cannot be found or isn\'t in the database\nCheck the spelling and try again'
+      });
+    }
   }
 
   render() {
